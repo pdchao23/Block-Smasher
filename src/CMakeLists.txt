@@ -6,6 +6,9 @@ get_filename_component(CINDER_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../../" ABSOL
 include("${CINDER_PATH}/proj/cmake/modules/cinderMakeApp.cmake")
 include("${FinalProject_SOURCE_DIR}/cmake/make_cinder_library.cmake")
 
+file(GLOB HEADER_LIST CONFIGURE_DEPENDS
+        "${FinalProject_SOURCE_DIR}/include/blocksmasher/*.h"
+        "${FinalProject_SOURCE_DIR}/include/blocksmasher/*.hpp")
 
 file(GLOB SOURCE_LIST CONFIGURE_DEPENDS
         "${FinalProject_SOURCE_DIR}/src/*.h"
@@ -15,24 +18,27 @@ file(GLOB SOURCE_LIST CONFIGURE_DEPENDS
 
 
 ci_make_library(
-        LIBRARY_NAME mylibrary
+        LIBRARY_NAME blocksmasher
         CINDER_PATH  ${CINDER_PATH}
         SOURCES      ${SOURCE_LIST}
-        INCLUDES     "${FinalProject_SOURCE_DIR}/include"
+        INCLUDES     "${FinalProject_SOURCE_DIR}/include/blocksmasher"
         LIBRARIES
-        BLOCKS
+        BLOCKS Box2D
 )
 
-# All users of this library will need at least C++14
-target_compile_features(mylibrary PUBLIC cxx_std_14)
+# We need this directory, and users of our library will need it too
+target_include_directories(blocksmasher PUBLIC ../include)
 
-set_property(TARGET mylibrary PROPERTY
+# All users of this library will need at least C++14
+target_compile_features(blocksmasher PUBLIC cxx_std_14)
+
+set_property(TARGET blocksmasher PROPERTY
         MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
 # Cross-platform compiler lints
 if (${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang"
         OR ${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU")
-    target_compile_options(mylibrary PRIVATE
+    target_compile_options(blocksmasher PRIVATE
             -Wall
             -Wextra
             -Wswitch
@@ -45,7 +51,7 @@ if (${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang"
             -pedantic-errors)
 elseif (${CMAKE_CXX_COMPILER_ID} STREQUAL "MSVC")
     cmake_policy(SET CMP0091 NEW)
-    target_compile_options(mylibrary PRIVATE
+    target_compile_options(blocksmasher PRIVATE
             /W3)
 endif ()
 

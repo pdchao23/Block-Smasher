@@ -1,0 +1,10 @@
+//
+// Created by Preston Chao on 4/21/20.
+//
+
+#ifndef FINALPROJECT_BLOCKSMASHER_BALL_H
+#define FINALPROJECT_BLOCKSMASHER_BALL_H
+
+class ball {};
+
+#endif  // FINALPROJECT_BLOCKSMASHER_BALL_H
