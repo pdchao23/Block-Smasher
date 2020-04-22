@@ -5,6 +5,18 @@
 #ifndef FINALPROJECT_BLOCKSMASHER_BALL_H
 #define FINALPROJECT_BLOCKSMASHER_BALL_H
 
-class ball {};
+namespace blocksmasher {
+
+class Ball {
+ private:
+  int posX;
+  int posY;
+
+ public:
+  Ball(int posX, int posY);
+  void initialize();
+};
+
+}
 
 #endif  // FINALPROJECT_BLOCKSMASHER_BALL_H

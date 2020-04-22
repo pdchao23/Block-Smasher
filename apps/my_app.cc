@@ -23,29 +23,62 @@ void MyApp::setup() {
   cinder::gl::enableDepthRead();
 
   // Create world in Box2D
-
-  // Define the gravity vector.
   b2Vec2 gravity(0.0f, -10.0f);
-
   // Construct a world object, which will hold and simulate the rigid bodies.
   b2World world(gravity);
 
-  // Define the ground body.
-  b2BodyDef groundBodyDef;
-  groundBodyDef.position.Set(0.0f, -10.0f);
-// Call the body factory which allocates memory for the ground body
-  // from a pool and creates the ground box shape (also from a pool).
-  // The body is also added to the world.
-  b2Body* groundBody = world.CreateBody(&groundBodyDef);
+  // create ball
+  b2BodyDef ballBodyDef;
+  ballBodyDef.type = b2_dynamicBody;
+  ballBodyDef.position.Set(0.0f, 4.0f);
+  b2Body* ballBody = world.CreateBody(&ballBodyDef);
 
-  // Define the ground box shape.
-  b2PolygonShape groundBox;
+  //define shape
+  b2CircleShape ballShape;
+  // ballShape.m_radius();
+  // TODO add circle start position
 
-  // The extents are the half-widths of the box.
-  groundBox.SetAsBox(50.0f, 10.0f);
+  //assign to fixture
+  b2FixtureDef ballFixture;
+  ballFixture.shape = &ballShape;
+  ballFixture.density = 1.0f;
+  //ballFixture.friction = 0;
 
-  // Add the ground fixture to the ground body.
-  groundBody->CreateFixture(&groundBox, 0.0f);
+  // create paddle
+  b2BodyDef paddleBodyDef;
+  paddleBodyDef.type = b2_kinematicBody;
+  ballBodyDef.position.Set(0.0f, 0.0f);
+  b2Body* paddleBody = world.CreateBody(&paddleBodyDef);
+
+  //define shape
+  b2PolygonShape paddleShape;
+  paddleShape.SetAsBox(1.0f, 1.0f);
+
+  //assign to fixture
+  b2FixtureDef paddleFixture;
+  paddleFixture.shape = &paddleShape;
+  ballFixture.density = 1.0f;
+  //ballFixture.friction = 0;
+
+  paddleBody->CreateFixture(&paddleFixture);
+
+  // create block
+  b2BodyDef blockBodyDef;
+  blockBodyDef.type = b2_staticBody;
+  blockBodyDef.position.Set(0.0f, 6.0f);
+  b2Body* blockBody = world.CreateBody(&blockBodyDef);
+
+  //define shape
+  b2PolygonShape blockShape;
+  blockShape.SetAsBox(1.0f, 1.0f);
+
+  //assign to fixture
+  b2FixtureDef blockFixture;
+  blockFixture.shape = &blockShape;
+  blockFixture.density = 1.0f;
+  //ballFixture.friction = 0;
+
+  blockBody->CreateFixture(&blockFixture);
 
 }
 

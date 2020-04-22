@@ -21,7 +21,7 @@ ci_make_library(
         LIBRARY_NAME blocksmasher
         CINDER_PATH  ${CINDER_PATH}
         SOURCES      ${SOURCE_LIST}
-        INCLUDES     "${FinalProject_SOURCE_DIR}/include/blocksmasher"
+        INCLUDES     "${FinalProject_SOURCE_DIR}/include"
         LIBRARIES
         BLOCKS Box2D
 )
