@@ -167,8 +167,8 @@ function( ci_make_library )
                 add_dependencies( ${ARG_LIBRARY_NAME} "${blockName}" )
                 target_link_libraries( ${ARG_LIBRARY_NAME} "${blockName}" )
             else()
-                # Otherwise, check for either includes for a header-only block or libraries that need to be linked.
-                # - sanity check to warn if someone passed in a block with unexpected cmake configuration
+                # Otherwise, check for either includes for a header-only Paddle or libraries that need to be linked.
+                # - sanity check to warn if someone passed in a Paddle with unexpected cmake configuration
                 if( NOT ${blockName}_INCLUDES AND NOT ${blockName}_LIBRARIES )
                     message( WARNING "no target defined for '${blockName}', so expected either ${blockName}_INCLUDES} or ${blockName}_LIBRARIES to be defined but neither were found." )
                 endif()
