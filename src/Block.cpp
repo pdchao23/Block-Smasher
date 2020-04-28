@@ -3,22 +3,25 @@
 //
 
 #include "blocksmasher/Block.h"
-#include <cinder/gl/gl.h>
+
 #include <cinder/gl/draw.h>
+#include <cinder/gl/gl.h>
+#include "cinder/Rand.h"
 
 using namespace ci;
 
 blocksmasher::Block::Block() {}
 
-void blocksmasher::Block::setup() {}
+void blocksmasher::Block::setup() {
+  color = ci::ColorA(ci::Rand::randFloat(0,.8), 0, 1, 1);
+}
 
 void blocksmasher::Block::update() {}
 
 void blocksmasher::Block::draw() {
-  b2Vec2 pos =  body->GetPosition();
-  float newX = pos.x * .01f;
-  float newY = pos.y * .01f;
-  gl::translate(newX, newY);
-  Rectf rect(-size.x, -size.y, size.x, size.y);
+  gl::color(color);
+  b2Vec2 pos = body->GetPosition();
+  Rectf rect(pos.x * 50. - 100, pos.y * 50. - 50, pos.x * 50 + 100,
+             pos.y * 50 + 50);
   gl::drawSolidRect(rect);
 }

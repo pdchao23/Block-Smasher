@@ -16,7 +16,6 @@ file(GLOB SOURCE_LIST CONFIGURE_DEPENDS
         "${FinalProject_SOURCE_DIR}/src/*.cc"
         "${FinalProject_SOURCE_DIR}/src/*.cpp")
 
-
 ci_make_library(
         LIBRARY_NAME blocksmasher
         CINDER_PATH  ${CINDER_PATH}

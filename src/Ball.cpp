@@ -17,5 +17,5 @@ void blocksmasher::Ball::update() {}
 void blocksmasher::Ball::draw() {
   b2Vec2 pos =  body->GetPosition();
   vec2 newVec = vec2(pos.x, pos.y) * 50.0f;
-  gl::drawSolidCircle(newVec, 50.0f, -1);
+  gl::drawSolidCircle(newVec, 25.0f, -1);
 }

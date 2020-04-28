@@ -5,6 +5,9 @@
 #include "blocksmasher/SceneController.h"
 
 #include <Box2D/Box2D.h>
+#include "cinder/gl/gl.h"
+#include <cinder/gl/draw.h>
+#include <cinder/gl/wrapper.h>
 
 #include "blocksmasher/Ball.h"
 
@@ -29,9 +32,22 @@ void SceneController::update() {
 void SceneController::draw() {
   ball.draw();
   paddle.draw();
+  for (Block b : blocks) {
+    b.draw();
+  }
 }
 
 void SceneController::setupWalls() {
+//  b2BodyDef groundBodyDef;
+//  groundBodyDef.position.Set(0.0f, -10.0f);
+//  b2Body* groundBody = world->CreateBody(&groundBodyDef);
+//  b2PolygonShape groundBox;
+//
+//  // The extents are the half-widths of the box.
+//  groundBox.SetAsBox(50.0f, 10.0f);
+//
+//  // Add the ground fixture to the ground body.
+//  groundBody->CreateFixture(&groundBox, 0.0f);
   //  // create block
   //  b2BodyDef blockBodyDef;
   //  blockBodyDef.type = b2_staticBody;
@@ -56,7 +72,7 @@ void SceneController::setupBall() {
   // create ball
   b2BodyDef ballBodyDef;
   ballBodyDef.type = b2_dynamicBody;
-  ballBodyDef.position.Set(0.0f, 4.0f);
+  ballBodyDef.position.Set(8.0f, 0.0f);
   ballBodyDef.userData = &ball;
   ball.body = world->CreateBody(&ballBodyDef);
 
@@ -76,45 +92,47 @@ void SceneController::setupBall() {
 }
 
 void SceneController::setupBlocks() {
-  //  for (int i = 0; i < 3; i++) {
-  //    for (int j = 0; j < 8; j++) {
-  Block block;
-  b2BodyDef blockBodyDef;
-  blockBodyDef.type = b2_staticBody;
-  blockBodyDef.position.Set(4.0f, 4.0f);
-  blockBodyDef.userData = &block;
-  block.body = world->CreateBody(&blockBodyDef);
+  for (int i = 0; i < 8; i++) {
+      Block block;
+      b2BodyDef blockBodyDef;
+      blockBodyDef.type = b2_staticBody;
+      blockBodyDef.position.Set(2.0f * i, 0.0f);
+      blockBodyDef.userData = &block;
+      block.body = world->CreateBody(&blockBodyDef);
 
-  // define shape
-  b2PolygonShape blockShape;
-  blockShape.SetAsBox(1.0f, 1.0f);
+      // define shape
+      b2PolygonShape blockShape;
+      blockShape.SetAsBox(2.0f, 1.0f);
 
-  // assign to fixture
-  b2FixtureDef blockFixture;
-  blockFixture.shape = &blockShape;
-  // density = 0 means it is static
-  blockFixture.density = 0;
-  blockFixture.friction = 0;
+      // assign to fixture
+      b2FixtureDef blockFixture;
+      blockFixture.shape = &blockShape;
+      // density = 0 means it is static
+      blockFixture.density = 0;
+      blockFixture.friction = 0;
 
-  block.body->CreateFixture(&blockFixture);
+      block.body->CreateFixture(&blockFixture);
+      block.setup();
+      blocks.push_back(block);
+  }
 }
 
 void SceneController::setupPaddle() {
   // create paddle
   b2BodyDef paddleBodyDef;
   paddleBodyDef.type = b2_kinematicBody;
-  paddleBodyDef.position.Set(0.0f, 0.0f);
+  paddleBodyDef.position.Set(8.0f, 15.0f);
   paddleBodyDef.userData = &paddle;
   paddle.body = world->CreateBody(&paddleBodyDef);
 
   // define shape
   b2PolygonShape paddleShape;
-  paddleShape.SetAsBox(1.0f, 1.0f);
+  paddleShape.SetAsBox(2.0f, 1.0f);
 
   // assign to fixture
   b2FixtureDef paddleFixture;
   paddleFixture.shape = &paddleShape;
-  paddleFixture.density = 1.0f;
+  paddleFixture.density = 0.0f;
   paddleFixture.friction = 0;
 
   paddle.body->CreateFixture(&paddleFixture);
