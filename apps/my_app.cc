@@ -19,19 +19,28 @@ namespace myapp {
 
 using cinder::app::KeyEvent;
 
+b2Vec2 gravity(0.0f, 10.0f);
+b2World world(gravity);
+
 MyApp::MyApp() {}
 
 void MyApp::setup() {
-  b2Vec2 gravity(0.0f, 10.0f);
-  b2World world(gravity);
+  sceneController.setup(world);
 }
 
-void MyApp::update() {}
+void MyApp::update() {
+  sceneController.update();
+
+  // step physics world
+  float32 timeStep = 1.0f / 60.0f;
+  int32 velocityIterations = 6;
+  int32 positionIterations = 2;
+  world.Step(timeStep, velocityIterations, positionIterations);
+}
 
 void MyApp::draw() {
   gl::clear();
-  gl::drawSolidRect(Rectf(0, 0, 100, 100));
-
+  sceneController.draw();
 }  // namespace myapp
 
 void MyApp::keyDown(KeyEvent event) {}

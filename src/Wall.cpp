@@ -6,7 +6,7 @@
 
 blocksmasher::Wall::Wall() {}
 
-void blocksmasher::Wall::setup(ci::vec2 boxSize) {}
+void blocksmasher::Wall::setup() {}
 
 void blocksmasher::Wall::update() {}
 

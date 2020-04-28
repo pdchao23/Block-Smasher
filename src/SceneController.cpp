@@ -21,6 +21,16 @@ void SceneController::setup(b2World& w) {
   setupWalls();
 }
 
+void SceneController::update() {
+  ball.update();
+  paddle.update();
+}
+
+void SceneController::draw() {
+  ball.draw();
+  paddle.draw();
+}
+
 void SceneController::setupWalls() {
   //  // create block
   //  b2BodyDef blockBodyDef;
@@ -54,7 +64,6 @@ void SceneController::setupBall() {
   b2CircleShape ballShape;
   // position
   ballShape.m_p.Set(2.0f, 3.0f);
-  ball.radius = .05f;
   ballShape.m_radius = 0.5f;
 
   // assign to fixture

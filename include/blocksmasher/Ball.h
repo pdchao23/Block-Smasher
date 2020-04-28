@@ -15,7 +15,7 @@ class Ball {
   Ball();
 
   // pass in a pointer to the particle
-  void setup(ci::vec2 boxSize);
+  void setup();
   void update();
   void draw();
 
@@ -24,7 +24,6 @@ class Ball {
   b2Body* body;
   ci::Color color;
   ci::vec2 size;
-  float radius;
 };
 
 }  // namespace blocksmasher

@@ -15,7 +15,7 @@ class Paddle {
   Paddle();
 
   // pass in a pointer to the particle
-  void setup(ci::vec2 boxSize);
+  void setup();
   void update();
   void draw();
 
