@@ -24,6 +24,7 @@ class Ball {
   b2Body* body;
   ci::Color color;
   float radius;
+  float scalar = 50.0f;
 };
 
 }  // namespace blocksmasher

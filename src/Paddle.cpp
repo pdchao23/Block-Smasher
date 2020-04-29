@@ -17,7 +17,9 @@ void blocksmasher::Paddle::update() {}
 
 void blocksmasher::Paddle::draw() {
   b2Vec2 pos = body->GetPosition();
-  Rectf rect(pos.x * scalar - 50, pos.y * scalar - 20, pos.x * scalar + 50,
-             pos.y * scalar + 20);
+  Rectf rect(pos.x * scalar - halfWidth * scalar,
+             pos.y * scalar - halfHeight * scalar,
+             pos.x * scalar + halfWidth * scalar,
+             pos.y * scalar + halfHeight * scalar);
   gl::drawSolidRect(rect);
 }

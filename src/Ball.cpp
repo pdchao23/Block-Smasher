@@ -4,6 +4,7 @@
 #include "blocksmasher/Ball.h"
 #include <cinder/gl/gl.h>
 #include <cinder/gl/draw.h>
+#include "blocksmasher/SceneController.h"
 
 
 using namespace ci;
@@ -16,6 +17,6 @@ void blocksmasher::Ball::update() {}
 
 void blocksmasher::Ball::draw() {
   b2Vec2 pos =  body->GetPosition();
-  vec2 newVec = vec2(pos.x, pos.y) * 50.0f;
-  gl::drawSolidCircle(newVec, 25.0f, -1);
+  vec2 newVec = vec2(pos.x, pos.y) * scalar;
+  gl::drawSolidCircle(newVec, radius * scalar, -1);
 }

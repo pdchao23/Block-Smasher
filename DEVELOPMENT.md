@@ -33,7 +33,7 @@ Week 2:
     - Able to make the UI look like I wanted
     - Started looking into the conversions and make sure Cinder and Box2D
      matched up
-     - Started to understand the conversion between the two so they allign
+     - Started to understand the conversion between the two so they align
       but still not perfect
       - Able to update the world to see the gravity on the ball
       - Changed the color so you can see the different blocks

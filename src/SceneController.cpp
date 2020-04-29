@@ -81,6 +81,7 @@ void SceneController::setupBall() {
   // position
   ballShape.m_p.Set(2.0f, 3.0f);
   ballShape.m_radius = 1.0f;
+  ball.radius = 1.0f;
 
   // assign to fixture
   b2FixtureDef ballFixture;
@@ -103,6 +104,8 @@ void SceneController::setupBlocks() {
       // define shape
       b2PolygonShape blockShape;
       blockShape.SetAsBox(2.0f, 1.0f);
+      block.halfWidth = 2.0f;
+      block.halfHeight = 1.0f;
 
       // assign to fixture
       b2FixtureDef blockFixture;
@@ -127,7 +130,9 @@ void SceneController::setupPaddle() {
 
   // define shape
   b2PolygonShape paddleShape;
-  paddleShape.SetAsBox(1.0f, 1.0f);
+  paddleShape.SetAsBox(2.0f, 1.0f);
+  paddle.halfWidth = 2.0f;
+  paddle.halfHeight = 1.0f;
 
   // assign to fixture
   b2FixtureDef paddleFixture;

@@ -23,8 +23,10 @@ class Block {
   // private:
   // store a pointer to the particle in the physics world from the main app
   b2Body* body;
-  ci::vec2 size;
   ci::Color color;
+  float halfHeight;
+  float halfWidth;
+  float scalar = 50.0f;
 };
 
 }  // namespace blocksmasher
