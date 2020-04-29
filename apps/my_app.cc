@@ -56,6 +56,8 @@ void MyApp::keyDown(KeyEvent event) {
       break;
     }
     case KeyEvent::KEY_DOWN:
+    case KeyEvent::KEY_UP:
+    case KeyEvent::KEY_w:
     case KeyEvent::KEY_s: {
       sceneController.stopPaddle();
       break;
