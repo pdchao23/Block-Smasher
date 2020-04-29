@@ -24,6 +24,7 @@ class SceneController {
 
   void movePaddleLeft();
   void movePaddleRight();
+  void stopPaddle();
 
  private:
   b2World* world;
