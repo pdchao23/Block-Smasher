@@ -43,6 +43,19 @@ void MyApp::draw() {
   sceneController.draw();
 }  // namespace myapp
 
-void MyApp::keyDown(KeyEvent event) {}
+void MyApp::keyDown(KeyEvent event) {
+  switch (event.getCode()) {
+    case KeyEvent::KEY_LEFT:
+    case KeyEvent::KEY_a: {
+      sceneController.movePaddleLeft();
+      break;
+    }
+    case KeyEvent::KEY_RIGHT:
+    case KeyEvent::KEY_d: {
+      sceneController.movePaddleRight();
+      break;
+    }
+  }
+}
 
 }  // namespace myapp

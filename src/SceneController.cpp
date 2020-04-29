@@ -77,14 +77,30 @@ void SceneController::setupWalls() {
   b2Body* topWallBody = world->CreateBody(&topWallBodyDef);
 
   b2PolygonShape topWallShape;
-  topWallShape.SetAsBox(1.0f, 8.0f);
+  topWallShape.SetAsBox(8.0f, 1.0f);
 
   b2FixtureDef topWallFixture;
   topWallFixture.shape = &topWallShape;
   topWallFixture.density = 0;
-  topWallFixture.friction = 0;
+  topWallFixture.friction = 1;
 
   topWallBody->CreateFixture(&topWallFixture);
+
+  //bottom wall
+  b2BodyDef bottomWallBodyDef;
+  bottomWallBodyDef.type = b2_staticBody;
+  bottomWallBodyDef.position.Set(8.0f, 15.0f);
+  b2Body* bottomWallBody = world->CreateBody(&bottomWallBodyDef);
+
+  b2PolygonShape bottomWallShape;
+  bottomWallShape.SetAsBox(8.0f, 1.0f);
+
+  b2FixtureDef bottomWallFixture;
+  bottomWallFixture.shape = &bottomWallShape;
+  bottomWallFixture.density = 0;
+  bottomWallFixture.friction = 1;
+
+  bottomWallBody->CreateFixture(&bottomWallFixture);
 }
 
 void SceneController::setupBall() {
@@ -112,11 +128,12 @@ void SceneController::setupBall() {
 }
 
 void SceneController::setupBlocks() {
-   for (int i = 0; i < 8; i++) {
+  for (int i = 0; i < 3; i++) {
+    for (int j = 0; j < 8; j++) {
       Block block;
       b2BodyDef blockBodyDef;
       blockBodyDef.type = b2_staticBody;
-      blockBodyDef.position.Set(1.0f + 2 * i, .5f);
+      blockBodyDef.position.Set(1.0f + 2 * j, .5f + 1 * i);
       blockBodyDef.userData = &block;
       block.body = world->CreateBody(&blockBodyDef);
 
@@ -136,20 +153,21 @@ void SceneController::setupBlocks() {
       block.body->CreateFixture(&blockFixture);
       block.setup();
       blocks.push_back(block);
-   }
+    }
+  }
 }
 
 void SceneController::setupPaddle() {
   // create paddle
   b2BodyDef paddleBodyDef;
-  paddleBodyDef.type = b2_kinematicBody;
+  paddleBodyDef.type = b2_dynamicBody;
   paddleBodyDef.position.Set(8.0f, 14.0f);
   paddleBodyDef.userData = &paddle;
   paddle.body = world->CreateBody(&paddleBodyDef);
 
   // define shape
   b2PolygonShape paddleShape;
-  paddleShape.SetAsBox(1.0f, .05f);
+  paddleShape.SetAsBox(1.0f, .5f);
   paddle.halfWidth = 1.0f;
   paddle.halfHeight = .5f;
 
@@ -157,7 +175,19 @@ void SceneController::setupPaddle() {
   b2FixtureDef paddleFixture;
   paddleFixture.shape = &paddleShape;
   paddleFixture.density = 0.0f;
-  paddleFixture.friction = 0;
+  paddleFixture.friction = 1;
 
   paddle.body->CreateFixture(&paddleFixture);
+}
+
+void SceneController::movePaddleLeft() {
+  b2Vec2 move = b2Vec2(0,0);
+  move.x += 100;
+  paddle.body->ApplyForce(move, paddle.body->GetPosition());
+}
+
+void SceneController::movePaddleRight() {
+  b2Vec2 move = b2Vec2(0,0);
+  move.x -= 100;
+  paddle.body->ApplyForce(move, paddle.body->GetPosition());
 }
