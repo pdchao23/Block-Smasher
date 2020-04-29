@@ -22,6 +22,7 @@ class SceneController {
   void update();
   void draw();
 
+  void startGame();
   void movePaddleLeft();
   void movePaddleRight();
   void stopPaddle();

@@ -19,7 +19,7 @@ namespace myapp {
 
 using cinder::app::KeyEvent;
 
-b2Vec2 gravity(0.0f, 10.0f);
+b2Vec2 gravity(0.0f, 0.0f);
 b2World world(gravity);
 
 MyApp::MyApp() {}
@@ -60,6 +60,10 @@ void MyApp::keyDown(KeyEvent event) {
     case KeyEvent::KEY_w:
     case KeyEvent::KEY_s: {
       sceneController.stopPaddle();
+      break;
+    }
+    case KeyEvent::KEY_SPACE: {
+      sceneController.startGame();
       break;
     }
   }

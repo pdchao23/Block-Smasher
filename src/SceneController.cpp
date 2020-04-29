@@ -37,6 +37,10 @@ void SceneController::draw() {
   }
 }
 
+void SceneController::startGame() {
+  ball.body->ApplyForce(b2Vec2( 0, 300 ), ball.body->GetPosition());
+}
+
 void SceneController::setupWalls() {
   //left wall
   b2BodyDef leftWallBodyDef;
@@ -86,21 +90,21 @@ void SceneController::setupWalls() {
 
   topWallBody->CreateFixture(&topWallFixture);
 
-  //bottom wall
-  b2BodyDef bottomWallBodyDef;
-  bottomWallBodyDef.type = b2_staticBody;
-  bottomWallBodyDef.position.Set(8.0f, 15.0f);
-  b2Body* bottomWallBody = world->CreateBody(&bottomWallBodyDef);
-
-  b2PolygonShape bottomWallShape;
-  bottomWallShape.SetAsBox(8.0f, 1.0f);
-
-  b2FixtureDef bottomWallFixture;
-  bottomWallFixture.shape = &bottomWallShape;
-  bottomWallFixture.density = 0;
-  bottomWallFixture.friction = 1;
-
-  bottomWallBody->CreateFixture(&bottomWallFixture);
+//  //bottom wall
+//  b2BodyDef bottomWallBodyDef;
+//  bottomWallBodyDef.type = b2_staticBody;
+//  bottomWallBodyDef.position.Set(8.0f, 15.0f);
+//  b2Body* bottomWallBody = world->CreateBody(&bottomWallBodyDef);
+//
+//  b2PolygonShape bottomWallShape;
+//  bottomWallShape.SetAsBox(8.0f, 1.0f);
+//
+//  b2FixtureDef bottomWallFixture;
+//  bottomWallFixture.shape = &bottomWallShape;
+//  bottomWallFixture.density = 0;
+//  bottomWallFixture.friction = 1;
+//
+//  bottomWallBody->CreateFixture(&bottomWallFixture);
 }
 
 void SceneController::setupBall() {
@@ -123,7 +127,7 @@ void SceneController::setupBall() {
   ballFixture.shape = &ballShape;
   ballFixture.density = 1.0f;
   ballFixture.friction = 0;
-  ballFixture.restitution = 1.5f;
+  ballFixture.restitution = 1.0f;
 
   ball.body->CreateFixture(&ballFixture);
 }
@@ -161,7 +165,7 @@ void SceneController::setupBlocks() {
 void SceneController::setupPaddle() {
   // create paddle
   b2BodyDef paddleBodyDef;
-  paddleBodyDef.type = b2_kinematicBody;
+  paddleBodyDef.type = b2_dynamicBody;
   paddleBodyDef.position.Set(8.0f, 14.0f);
   paddleBodyDef.userData = &paddle;
   paddle.body = world->CreateBody(&paddleBodyDef);
@@ -175,7 +179,7 @@ void SceneController::setupPaddle() {
   // assign to fixture
   b2FixtureDef paddleFixture;
   paddleFixture.shape = &paddleShape;
-  paddleFixture.density = 0.0f;
+  paddleFixture.density = 1000000.0f;
   paddleFixture.friction = 0;
 
   paddle.body->CreateFixture(&paddleFixture);
