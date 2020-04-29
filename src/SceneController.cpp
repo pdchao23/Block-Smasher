@@ -80,7 +80,7 @@ void SceneController::setupBall() {
   b2CircleShape ballShape;
   // position
   ballShape.m_p.Set(2.0f, 3.0f);
-  ballShape.m_radius = 0.5f;
+  ballShape.m_radius = 1.0f;
 
   // assign to fixture
   b2FixtureDef ballFixture;
@@ -121,13 +121,13 @@ void SceneController::setupPaddle() {
   // create paddle
   b2BodyDef paddleBodyDef;
   paddleBodyDef.type = b2_kinematicBody;
-  paddleBodyDef.position.Set(8.0f, 15.0f);
+  paddleBodyDef.position.Set(9.0f, 15.0f);
   paddleBodyDef.userData = &paddle;
   paddle.body = world->CreateBody(&paddleBodyDef);
 
   // define shape
   b2PolygonShape paddleShape;
-  paddleShape.SetAsBox(2.0f, 1.0f);
+  paddleShape.SetAsBox(1.0f, 1.0f);
 
   // assign to fixture
   b2FixtureDef paddleFixture;

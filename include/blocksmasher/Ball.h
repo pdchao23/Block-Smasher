@@ -23,7 +23,7 @@ class Ball {
   // store a pointer to the particle in the physics world from the main app
   b2Body* body;
   ci::Color color;
-  ci::vec2 size;
+  float radius;
 };
 
 }  // namespace blocksmasher
