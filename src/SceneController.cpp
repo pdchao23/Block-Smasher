@@ -5,11 +5,6 @@
 #include "blocksmasher/SceneController.h"
 
 #include <Box2D/Box2D.h>
-#include "cinder/gl/gl.h"
-#include <cinder/gl/draw.h>
-#include <cinder/gl/wrapper.h>
-
-#include "blocksmasher/Ball.h"
 
 using namespace std;
 using namespace ci;
@@ -38,11 +33,11 @@ void SceneController::draw() {
 }
 
 void SceneController::startGame() {
-  ball.body->ApplyForce(b2Vec2( 0, 300 ), ball.body->GetPosition());
+  ball.body->ApplyForce(b2Vec2(0, 300), ball.body->GetPosition());
 }
 
 void SceneController::setupWalls() {
-  //left wall
+  // left wall
   b2BodyDef leftWallBodyDef;
   leftWallBodyDef.type = b2_staticBody;
   leftWallBodyDef.position.Set(-1.0f, 8.0f);
@@ -58,7 +53,7 @@ void SceneController::setupWalls() {
 
   leftWallBody->CreateFixture(&leftWallFixture);
 
-  //right wall
+  // right wall
   b2BodyDef rightWallBodyDef;
   rightWallBodyDef.type = b2_staticBody;
   rightWallBodyDef.position.Set(17.0f, 8.0f);
@@ -74,7 +69,7 @@ void SceneController::setupWalls() {
 
   rightWallBody->CreateFixture(&rightWallFixture);
 
-  //top wall
+  // top wall
   b2BodyDef topWallBodyDef;
   topWallBodyDef.type = b2_staticBody;
   topWallBodyDef.position.Set(8.0f, -1.0f);
@@ -90,21 +85,21 @@ void SceneController::setupWalls() {
 
   topWallBody->CreateFixture(&topWallFixture);
 
-//  //bottom wall
-//  b2BodyDef bottomWallBodyDef;
-//  bottomWallBodyDef.type = b2_staticBody;
-//  bottomWallBodyDef.position.Set(8.0f, 15.0f);
-//  b2Body* bottomWallBody = world->CreateBody(&bottomWallBodyDef);
-//
-//  b2PolygonShape bottomWallShape;
-//  bottomWallShape.SetAsBox(8.0f, 1.0f);
-//
-//  b2FixtureDef bottomWallFixture;
-//  bottomWallFixture.shape = &bottomWallShape;
-//  bottomWallFixture.density = 0;
-//  bottomWallFixture.friction = 1;
-//
-//  bottomWallBody->CreateFixture(&bottomWallFixture);
+  // bottom wall
+  b2BodyDef bottomWallBodyDef;
+  bottomWallBodyDef.type = b2_staticBody;
+  bottomWallBodyDef.position.Set(8.0f, 15.0f);
+  b2Body* bottomWallBody = world->CreateBody(&bottomWallBodyDef);
+
+  b2PolygonShape bottomWallShape;
+  bottomWallShape.SetAsBox(8.0f, 1.0f);
+
+  b2FixtureDef bottomWallFixture;
+  bottomWallFixture.shape = &bottomWallShape;
+  bottomWallFixture.density = 0;
+  bottomWallFixture.friction = 1;
+
+  bottomWallBody->CreateFixture(&bottomWallFixture);
 }
 
 void SceneController::setupBall() {
@@ -125,7 +120,7 @@ void SceneController::setupBall() {
   // assign to fixture
   b2FixtureDef ballFixture;
   ballFixture.shape = &ballShape;
-  ballFixture.density = 1.0f;
+  ballFixture.density = 0.0f;
   ballFixture.friction = 0;
   ballFixture.restitution = 1.0f;
 
@@ -186,12 +181,58 @@ void SceneController::setupPaddle() {
 }
 
 void SceneController::movePaddleLeft() {
-  paddle.body->SetLinearVelocity( b2Vec2( -10, 0 ) );
+  paddle.body->SetLinearVelocity(b2Vec2(-10, 0));
 }
 
 void SceneController::movePaddleRight() {
-  paddle.body->SetLinearVelocity( b2Vec2( 10, 0 ) );
+  paddle.body->SetLinearVelocity(b2Vec2(10, 0));
 }
+
 void SceneController::stopPaddle() {
-  paddle.body->SetLinearVelocity( b2Vec2( 0, 0 ) );
+  paddle.body->SetLinearVelocity(b2Vec2(0, 0));
 }
+
+void SceneController::BeginContact(b2Contact* contact) {
+  cout << "Contact";
+
+  auto* userDataA = contact->GetFixtureA()->GetBody()->GetUserData();
+  auto* userDataB = contact->GetFixtureB()->GetBody()->GetUserData();
+//  //
+//  //  b2WorldManifold worldManifold;
+//  //  contact->GetWorldManifold( &worldManifold );
+//  //
+//  //  b2Vec2 contactPointB2 = worldManifold.points[0];
+//  //  vec2 contactPointCi = vec2(contactPointB2.x, contactPointB2.y) * scalar;
+//  Block* contact1 = static_cast<Block*>(userDataA);
+//  cout << contact1->tag;
+//  Block* contact2 = static_cast<Block*>(userDataB);
+//  cout << contact2->tag;
+  Block* contactBlock;
+  if (typeid(userDataA) == typeid(Block)) {
+    cout << "block";
+  } else if (typeid(userDataA) == typeid(Ball)) {
+    cout << "ball";
+  } else if (typeid(userDataA) == typeid(Paddle)) {
+    cout << "paddle";
+  } else {
+    cout << "nothing";
+  }
+//  if ((typeid(userDataA) == typeid(Block))) {
+//    contactBlock = static_cast<Block*>(userDataA);
+//    cout << contactBlock->tag;
+//  } else if (typeid(userDataB) == typeid(Block)) {
+//    contactBlock = static_cast<Block*>(userDataA);
+//    cout << contactBlock->tag;
+//  }
+//  for (int i = 0; i < blocks.size(); i++) {
+//    if (contactBlock->body->GetPosition() == blocks[i].body->GetPosition()) {
+//      blocks.erase(blocks.begin() + i);
+//      cout << "removed a block";
+//    }
+//  }
+}
+//
+//void SceneController::handlePaddleCollision(Paddle* paddle,
+//                                            const vec2& contactPoint) {}
+//void SceneController::handleBlockCollision(Block* block,
+//                                           const vec2& contactPoint) {}

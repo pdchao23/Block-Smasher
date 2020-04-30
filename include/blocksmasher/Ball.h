@@ -25,6 +25,7 @@ class Ball {
   ci::Color color;
   float radius;
   float scalar = 50.0f;
+  std::string tag = "ball";
 };
 
 }  // namespace blocksmasher

@@ -10,21 +10,44 @@
 
 namespace blocksmasher {
 
-class Wall {
+struct SceneObject {
  public:
-  Wall();
-  ~Wall();
-
   // pass in a pointer to the particle
-  void setup();
-  void update();
-  void draw();
-
   // private:
   // store a pointer to the particle in the physics world from the main app
   b2Body* body;
   ci::Color color;
-  ci::vec2 size;
+  float scalar = 50.0f;
+  std::string tag;
+};
+
+struct Ball : public SceneObject {
+ public:
+  void setup();
+  void draw();
+
+ private:
+  float radius;
+};
+
+struct Block : public SceneObject {
+ public:
+  void setup();
+  void draw();
+
+// private:
+  float halfHeight;
+  float halfWidth;
+};
+
+struct Paddle : public SceneObject {
+ public:
+  void setup();
+  void draw();
+
+// private:
+  float halfHeight;
+  float halfWidth;
 };
 
 }  // namespace blocksmasher

@@ -15,7 +15,7 @@
 
 using namespace blocksmasher;
 
-class SceneController {
+class SceneController : public b2ContactListener {
  public:
   SceneController();
   void setup(b2World& w);
@@ -32,11 +32,14 @@ class SceneController {
   std::vector<Block> blocks;
   Ball ball;
   Paddle paddle;
+  float scalar = 50.0f;
 
   void setupBall();
   void setupBlocks();
   void setupPaddle();
   void setupWalls();
+
+  void BeginContact(b2Contact* contact) override;
 };
 
 #endif  // FINALPROJECT_SCENECONTROLLER_H

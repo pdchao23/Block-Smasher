@@ -27,6 +27,7 @@ class Block {
   float halfHeight;
   float halfWidth;
   float scalar = 50.0f;
+  std::string tag = "block";
 };
 
 }  // namespace blocksmasher

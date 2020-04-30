@@ -2,10 +2,7 @@
 // Created by Preston Chao on 4/21/20.
 //
 #include "blocksmasher/Ball.h"
-#include <cinder/gl/gl.h>
 #include <cinder/gl/draw.h>
-#include "blocksmasher/SceneController.h"
-
 
 using namespace ci;
 

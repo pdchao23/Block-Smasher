@@ -26,6 +26,7 @@ MyApp::MyApp() {}
 
 void MyApp::setup() {
   sceneController.setup(world);
+  world.SetContactListener(&sceneController);
 }
 
 void MyApp::update() {
