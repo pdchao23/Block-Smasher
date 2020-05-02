@@ -11,7 +11,8 @@
 
 using namespace ci;
 
-namespace blocksmasher {
+//namespace blocksmasher {
+
 void Ball::setup() { tag = "ball"; }
 void Ball::draw() {
   b2Vec2 pos = body->GetPosition();
@@ -42,4 +43,5 @@ void Paddle::draw() {
              pos.y * scalar + halfHeight * scalar);
   gl::drawSolidRect(rect);
 }
-}  // namespace blocksmasher
+
+//}  // namespace blocksmasher

@@ -8,7 +8,7 @@
 #include "cinder/Color.h"
 #include <Box2D/Box2d.h>
 
-namespace blocksmasher {
+//namespace blocksmasher {
 
 struct SceneObject {
  public:
@@ -25,6 +25,8 @@ struct Ball : public SceneObject {
  public:
   void setup();
   void draw();
+  float getRadius() {return radius;}
+  void setRadius(float r) { radius = r;}
 
  private:
   float radius;
@@ -34,8 +36,12 @@ struct Block : public SceneObject {
  public:
   void setup();
   void draw();
+  float getHalfHeight() {return halfHeight;}
+  float getHalfWidth() {return halfWidth;}
+  void setHeight(float hheight) { halfHeight = hheight;}
+  void setWidth(float hwidth) { halfWidth = hwidth;}
 
-// private:
+ private:
   float halfHeight;
   float halfWidth;
 };
@@ -44,11 +50,15 @@ struct Paddle : public SceneObject {
  public:
   void setup();
   void draw();
+  float getHalfHeight() {return halfHeight;}
+  float getHalfWidth() {return halfWidth;}
+  void setHeight(float hheight) { halfHeight = hheight;}
+  void setWidth(float hwidth) { halfWidth = hwidth;}
 
-// private:
+ private:
   float halfHeight;
   float halfWidth;
 };
 
-}  // namespace blocksmasher
+//}  // namespace blocksmasher
 #endif  // FINALPROJECT_PADDLE_H

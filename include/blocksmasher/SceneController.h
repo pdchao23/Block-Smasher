@@ -6,14 +6,15 @@
 #define FINALPROJECT_SCENECONTROLLER_H
 
 #include <Box2D/Box2D.h>
-#include <blocksmasher/Ball.h>
-#include <blocksmasher/Block.h>
-#include <blocksmasher/Paddle.h>
+//#include <blocksmasher/Ball.h>
+//#include <blocksmasher/Block.h>
+//#include <blocksmasher/Paddle.h>
 #include <cinder/gl/draw.h>
+#include <blocksmasher/SceneObject.h>
 
 #include <vector>
 
-using namespace blocksmasher;
+//using namespace blocksmasher;
 
 class SceneController : public b2ContactListener {
  public:

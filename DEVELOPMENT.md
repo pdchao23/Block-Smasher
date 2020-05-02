@@ -37,3 +37,14 @@ Week 2:
       but still not perfect
       - Able to update the world to see the gravity on the ball
       - Changed the color so you can see the different blocks
+      
+ Week 3:
+  - **4/29/20**
+     - Took away the gravity and manually creating the forces
+     - Able to move the paddle side to side and stops when colliding with the
+      side wall
+      
+   - **4/28/20**
+      - Working with collisions
+      - Able to trigger the collision and set listener but cannot detect what
+       body is connected with the contact

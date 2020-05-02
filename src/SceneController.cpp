@@ -3,6 +3,7 @@
 //
 
 #include "blocksmasher/SceneController.h"
+#include <blocksmasher/SceneObject.h>
 
 #include <Box2D/Box2D.h>
 
@@ -20,8 +21,8 @@ void SceneController::setup(b2World& w) {
 }
 
 void SceneController::update() {
-  ball.update();
-  paddle.update();
+//  ball.update();
+//  paddle.update();
 }
 
 void SceneController::draw() {
@@ -115,7 +116,7 @@ void SceneController::setupBall() {
   // position
   ballShape.m_p.Set(0, 0);
   ballShape.m_radius = .5f;
-  ball.radius = .5f;
+  ball.setRadius(.5f);
 
   // assign to fixture
   b2FixtureDef ballFixture;
@@ -140,8 +141,8 @@ void SceneController::setupBlocks() {
       // define shape
       b2PolygonShape blockShape;
       blockShape.SetAsBox(1.0f, .5f);
-      block.halfWidth = 1.0f;
-      block.halfHeight = .5f;
+      block.setWidth(1.0f);
+      block.setHeight(.5f);
 
       // assign to fixture
       b2FixtureDef blockFixture;
@@ -168,8 +169,8 @@ void SceneController::setupPaddle() {
   // define shape
   b2PolygonShape paddleShape;
   paddleShape.SetAsBox(1.0f, .5f);
-  paddle.halfWidth = 1.0f;
-  paddle.halfHeight = .5f;
+  paddle.setWidth(1.0f);
+  paddle.setHeight(.5f);
 
   // assign to fixture
   b2FixtureDef paddleFixture;
@@ -197,6 +198,32 @@ void SceneController::BeginContact(b2Contact* contact) {
 
   auto* userDataA = contact->GetFixtureA()->GetBody()->GetUserData();
   auto* userDataB = contact->GetFixtureB()->GetBody()->GetUserData();
+
+  auto *objectA = static_cast<SceneObject*>( userDataA );
+  auto *objectB = static_cast<SceneObject*>( userDataB );
+  cout << objectA->tag;
+  cout << objectB->tag;
+//
+//  if (objectA->tag == "ball") {
+//    cout << "objectA: ball";
+//  } else if (objectA->tag == "paddle") {
+//    cout << "objectA: paddle";
+//  } else if (objectA->tag == "block") {
+//    cout << "objectA: block";
+//  } else {
+//    cout << "objectA: Nothing";
+//  }
+//  if (objectB->tag == "ball") {
+//    cout << "objectB: ball";
+//  } else if (objectB->tag == "paddle") {
+//    cout << "objectB: paddle";
+//  } else if (objectB->tag == "block") {
+//    cout << "objectB: block";
+//  } else {
+//    cout << "objectB: Nothing";
+//  }
+
+
 //  //
 //  //  b2WorldManifold worldManifold;
 //  //  contact->GetWorldManifold( &worldManifold );
@@ -207,12 +234,12 @@ void SceneController::BeginContact(b2Contact* contact) {
 //  cout << contact1->tag;
 //  Block* contact2 = static_cast<Block*>(userDataB);
 //  cout << contact2->tag;
-  Block* contactBlock;
-  if (typeid(userDataA) == typeid(Block)) {
+//  Block* contactBlock;
+  if (typeid(*objectA) == typeid(Block)) {
     cout << "block";
-  } else if (typeid(userDataA) == typeid(Ball)) {
+  } else if (typeid(*objectA) == typeid(Ball)) {
     cout << "ball";
-  } else if (typeid(userDataA) == typeid(Paddle)) {
+  } else if (typeid(*objectA) == typeid(Paddle)) {
     cout << "paddle";
   } else {
     cout << "nothing";
