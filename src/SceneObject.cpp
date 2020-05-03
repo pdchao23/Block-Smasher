@@ -11,12 +11,11 @@
 
 using namespace ci;
 
-//namespace blocksmasher {
-
 void Ball::setup() {
   tag = "ball";
   body->SetUserData(this);
 }
+
 void Ball::draw() {
   b2Vec2 pos = body->GetPosition();
   vec2 newVec = vec2(pos.x, pos.y) * scalar;
@@ -28,6 +27,7 @@ void Block::setup() {
   color = ci::ColorA(ci::Rand::randFloat(0, .8), 0, 1, 1);
   body->SetUserData(this);
 }
+
 void Block::draw() {
   gl::color(color);
   b2Vec2 pos = body->GetPosition();
@@ -42,6 +42,7 @@ void Paddle::setup() {
   tag = "paddle";
   body->SetUserData(this);
 }
+
 void Paddle::draw() {
   b2Vec2 pos = body->GetPosition();
   Rectf rect(pos.x * scalar - halfWidth * scalar,
@@ -50,5 +51,3 @@ void Paddle::draw() {
              pos.y * scalar + halfHeight * scalar);
   gl::drawSolidRect(rect);
 }
-
-//}  // namespace blocksmasher

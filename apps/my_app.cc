@@ -33,6 +33,10 @@ void MyApp::setup() {
   sceneController.setup(world);
   world.SetContactListener(&sceneController);
   printedGameOver = false;
+  cinder::audio::SourceFileRef sourceFile1 =
+      cinder::audio::load(cinder::app::loadAsset("ChillingMusic.wav"));
+  backgroundSound = cinder::audio::Voice::create(sourceFile1);
+  backgroundSound->start();
 }
 
 void MyApp::update() {
@@ -43,6 +47,7 @@ void MyApp::update() {
   int32 positionIterations = 2;
   world.Step(timeStep, velocityIterations, positionIterations);
   sceneController.update();
+  backgroundSound->start();
 }
 
 void MyApp::drawGameOver() {
@@ -83,7 +88,7 @@ void MyApp::draw() {
   }
   gl::clear();
   sceneController.draw();
-}  // namespace myapp
+}
 
 
 void MyApp::keyDown(KeyEvent event) {

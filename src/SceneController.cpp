@@ -3,9 +3,9 @@
 //
 
 #include "blocksmasher/SceneController.h"
+#include <blocksmasher/SceneObject.h>
 
 #include <Box2D/Box2D.h>
-#include <blocksmasher/SceneObject.h>
 
 using namespace std;
 using namespace ci;

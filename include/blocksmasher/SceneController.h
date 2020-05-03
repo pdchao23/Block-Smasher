@@ -5,16 +5,11 @@
 #ifndef FINALPROJECT_SCENECONTROLLER_H
 #define FINALPROJECT_SCENECONTROLLER_H
 
-#include <Box2D/Box2D.h>
-//#include <blocksmasher/Ball.h>
-//#include <blocksmasher/Block.h>
-//#include <blocksmasher/Paddle.h>
 #include <blocksmasher/SceneObject.h>
+
 #include <cinder/gl/draw.h>
-
+#include <Box2D/Box2D.h>
 #include <vector>
-
-// using namespace blocksmasher;
 
 class SceneController : public b2ContactListener {
  public:
@@ -39,7 +34,6 @@ class SceneController : public b2ContactListener {
   Paddle paddle;
   bool gameOver;
   bool win;
-  float scalar = 50.0f;
 
   void setupBall();
   void setupBlocks();
