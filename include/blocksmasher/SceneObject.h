@@ -15,6 +15,7 @@ struct SceneObject {
   // pass in a pointer to the particle
   // private:
   // store a pointer to the particle in the physics world from the main app
+  std::string getTag() {return tag;}
   b2Body* body;
   ci::Color color;
   float scalar = 50.0f;

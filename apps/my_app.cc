@@ -12,6 +12,11 @@
 #include <cinder/gl/gl.h>
 
 using namespace ci;
+using cinder::Color;
+using cinder::ColorA;
+using cinder::Rectf;
+using cinder::TextBox;
+using cinder::app::KeyEvent;
 using namespace ci::app;
 using namespace std;
 
@@ -27,22 +32,59 @@ MyApp::MyApp() {}
 void MyApp::setup() {
   sceneController.setup(world);
   world.SetContactListener(&sceneController);
+  printedGameOver = false;
 }
 
 void MyApp::update() {
-  sceneController.update();
-
   // step physics world
+  if (sceneController.getGameOver()) { return;}
   float32 timeStep = 1.0f / 60.0f;
   int32 velocityIterations = 6;
   int32 positionIterations = 2;
   world.Step(timeStep, velocityIterations, positionIterations);
+  sceneController.update();
+}
+
+void MyApp::drawGameOver() {
+  if (printedGameOver) return;
+  const cinder::vec2 center = vec2(150,375);
+  const cinder::ivec2 size = {500, 50};
+  const Color color = Color::black();
+  string win;
+  if (sceneController.getWin()) {
+    win = "You Won!";
+  } else {
+    win = "You Lost!";
+  }
+  auto box = TextBox()
+      .alignment(TextBox::CENTER)
+      .font(cinder::Font("Arial", 50))
+      .size(size)
+      .color(color)
+      .backgroundColor(ColorA(0, 0, 0, 0))
+      .text(win);
+
+  const auto box_size = box.getSize();
+  const cinder::vec2 locp = {center};
+  const auto surface = box.render();
+  const auto texture = cinder::gl::Texture::create(surface);
+  cinder::gl::draw(texture, locp);
+  printedGameOver = true;
 }
 
 void MyApp::draw() {
+  cinder::gl::enableAlphaBlending();
+  if (sceneController.getGameOver()) {
+    if (!printedGameOver) {
+      cinder::gl::clear(ColorA(0, 0, 1, 100));
+      drawGameOver();
+    }
+    return;
+  }
   gl::clear();
   sceneController.draw();
 }  // namespace myapp
+
 
 void MyApp::keyDown(KeyEvent event) {
   switch (event.getCode()) {

@@ -3,9 +3,9 @@
 //
 
 #include "blocksmasher/SceneController.h"
-#include <blocksmasher/SceneObject.h>
 
 #include <Box2D/Box2D.h>
+#include <blocksmasher/SceneObject.h>
 
 using namespace std;
 using namespace ci;
@@ -18,11 +18,22 @@ void SceneController::setup(b2World& w) {
   setupBlocks();
   setupPaddle();
   setupWalls();
+  gameOver = false;
 }
 
 void SceneController::update() {
-//  ball.update();
-//  paddle.update();
+  for (b2Body* b: deleteBlockBodies) {
+    world->DestroyBody(b);
+  }
+  deleteBlockBodies.clear();
+  if (blocks.empty()) {
+    gameOver = true;
+    win = true;
+  }
+  if (ball.body->GetPosition().y > 17) {
+    gameOver = true;
+    win = false;
+  }
 }
 
 void SceneController::draw() {
@@ -126,6 +137,7 @@ void SceneController::setupBall() {
   ballFixture.restitution = 1.0f;
 
   ball.body->CreateFixture(&ballFixture);
+  ball.setup();
 }
 
 void SceneController::setupBlocks() {
@@ -179,6 +191,7 @@ void SceneController::setupPaddle() {
   paddleFixture.friction = 0;
 
   paddle.body->CreateFixture(&paddleFixture);
+  paddle.setup();
 }
 
 void SceneController::movePaddleLeft() {
@@ -194,72 +207,12 @@ void SceneController::stopPaddle() {
 }
 
 void SceneController::BeginContact(b2Contact* contact) {
-  cout << "Contact";
-
-  auto* userDataA = contact->GetFixtureA()->GetBody()->GetUserData();
-  auto* userDataB = contact->GetFixtureB()->GetBody()->GetUserData();
-
-  auto *objectA = static_cast<SceneObject*>( userDataA );
-  auto *objectB = static_cast<SceneObject*>( userDataB );
-  cout << objectA->tag;
-  cout << objectB->tag;
-//
-//  if (objectA->tag == "ball") {
-//    cout << "objectA: ball";
-//  } else if (objectA->tag == "paddle") {
-//    cout << "objectA: paddle";
-//  } else if (objectA->tag == "block") {
-//    cout << "objectA: block";
-//  } else {
-//    cout << "objectA: Nothing";
-//  }
-//  if (objectB->tag == "ball") {
-//    cout << "objectB: ball";
-//  } else if (objectB->tag == "paddle") {
-//    cout << "objectB: paddle";
-//  } else if (objectB->tag == "block") {
-//    cout << "objectB: block";
-//  } else {
-//    cout << "objectB: Nothing";
-//  }
-
-
-//  //
-//  //  b2WorldManifold worldManifold;
-//  //  contact->GetWorldManifold( &worldManifold );
-//  //
-//  //  b2Vec2 contactPointB2 = worldManifold.points[0];
-//  //  vec2 contactPointCi = vec2(contactPointB2.x, contactPointB2.y) * scalar;
-//  Block* contact1 = static_cast<Block*>(userDataA);
-//  cout << contact1->tag;
-//  Block* contact2 = static_cast<Block*>(userDataB);
-//  cout << contact2->tag;
-//  Block* contactBlock;
-  if (typeid(*objectA) == typeid(Block)) {
-    cout << "block";
-  } else if (typeid(*objectA) == typeid(Ball)) {
-    cout << "ball";
-  } else if (typeid(*objectA) == typeid(Paddle)) {
-    cout << "paddle";
-  } else {
-    cout << "nothing";
+  b2Fixture* a = contact->GetFixtureA();
+  b2Vec2 loc = a->GetBody()->GetPosition();
+  for (int i = 0; i < blocks.size(); i++) {
+    if (blocks[i].body->GetPosition() == loc) {
+      deleteBlockBodies.push_back(blocks[i].body);
+      blocks.erase(blocks.begin() + i);
+    }
   }
-//  if ((typeid(userDataA) == typeid(Block))) {
-//    contactBlock = static_cast<Block*>(userDataA);
-//    cout << contactBlock->tag;
-//  } else if (typeid(userDataB) == typeid(Block)) {
-//    contactBlock = static_cast<Block*>(userDataA);
-//    cout << contactBlock->tag;
-//  }
-//  for (int i = 0; i < blocks.size(); i++) {
-//    if (contactBlock->body->GetPosition() == blocks[i].body->GetPosition()) {
-//      blocks.erase(blocks.begin() + i);
-//      cout << "removed a block";
-//    }
-//  }
 }
-//
-//void SceneController::handlePaddleCollision(Paddle* paddle,
-//                                            const vec2& contactPoint) {}
-//void SceneController::handleBlockCollision(Block* block,
-//                                           const vec2& contactPoint) {}

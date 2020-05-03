@@ -14,6 +14,8 @@ namespace blocksmasher {
 class Block {
  public:
   Block();
+//  ~Block();
+
 
   // pass in a pointer to the particle
   void setup();

@@ -9,12 +9,12 @@
 //#include <blocksmasher/Ball.h>
 //#include <blocksmasher/Block.h>
 //#include <blocksmasher/Paddle.h>
-#include <cinder/gl/draw.h>
 #include <blocksmasher/SceneObject.h>
+#include <cinder/gl/draw.h>
 
 #include <vector>
 
-//using namespace blocksmasher;
+// using namespace blocksmasher;
 
 class SceneController : public b2ContactListener {
  public:
@@ -28,11 +28,17 @@ class SceneController : public b2ContactListener {
   void movePaddleRight();
   void stopPaddle();
 
+  bool getGameOver() { return gameOver; }
+  bool getWin() { return win; }
+
  private:
   b2World* world;
   std::vector<Block> blocks;
+  std::vector<b2Body*> deleteBlockBodies;
   Ball ball;
   Paddle paddle;
+  bool gameOver;
+  bool win;
   float scalar = 50.0f;
 
   void setupBall();

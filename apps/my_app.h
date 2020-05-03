@@ -28,10 +28,13 @@ class MyApp : public cinder::app::App {
   void setup() override;
   void update() override;
   void draw() override;
+  void drawGameOver();
+  void printText();
   void keyDown(cinder::app::KeyEvent) override;
 
  private:
   SceneController sceneController;
+  bool printedGameOver;
 };
 
 }  // namespace myapp

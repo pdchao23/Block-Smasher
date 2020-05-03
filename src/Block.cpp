@@ -13,6 +13,10 @@ using namespace ci;
 
 blocksmasher::Block::Block() {}
 
+//blocksmasher::Block::~Block() {
+//  body->GetWorld()->DestroyBody(body);
+//}
+
 void blocksmasher::Block::setup() {
   color = ci::ColorA(ci::Rand::randFloat(0, .8), 0, 1, 1);
 }
