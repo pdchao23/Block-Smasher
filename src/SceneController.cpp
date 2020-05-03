@@ -3,9 +3,9 @@
 //
 
 #include "blocksmasher/SceneController.h"
-#include <blocksmasher/SceneObject.h>
 
 #include <Box2D/Box2D.h>
+#include <blocksmasher/SceneObject.h>
 
 using namespace std;
 using namespace ci;
@@ -22,14 +22,19 @@ void SceneController::setup(b2World& w) {
 }
 
 void SceneController::update() {
-  for (b2Body* b: deleteBlockBodies) {
+  // Go through the blocks supposed to delete and delete them
+  for (b2Body* b : deleteBlockBodies) {
     world->DestroyBody(b);
   }
   deleteBlockBodies.clear();
+
+  // If no more blocks the game is over and the player has won
   if (blocks.empty()) {
     gameOver = true;
     win = true;
   }
+
+  // If the ball is below the screen the game is over and the player has lost
   if (ball.body->GetPosition().y > 17) {
     gameOver = true;
     win = false;
@@ -46,6 +51,32 @@ void SceneController::draw() {
 
 void SceneController::startGame() {
   ball.body->ApplyForce(b2Vec2(0, 300), ball.body->GetPosition());
+}
+
+void SceneController::movePaddleLeft() {
+  paddle.body->SetLinearVelocity(b2Vec2(-10, 0));
+}
+
+void SceneController::movePaddleRight() {
+  paddle.body->SetLinearVelocity(b2Vec2(10, 0));
+}
+
+void SceneController::stopPaddle() {
+  paddle.body->SetLinearVelocity(b2Vec2(0, 0));
+}
+
+void SceneController::BeginContact(b2Contact* contact) {
+  b2Fixture* a = contact->GetFixtureA();
+  b2Vec2 loc = a->GetBody()->GetPosition();
+
+  // Go through the blocks and find the matching position
+  for (int i = 0; i < blocks.size(); i++) {
+    if (blocks[i].body->GetPosition() == loc) {
+      // add to array to delete blocks and remove from vector
+      deleteBlockBodies.push_back(blocks[i].body);
+      blocks.erase(blocks.begin() + i);
+    }
+  }
 }
 
 void SceneController::setupWalls() {
@@ -97,21 +128,21 @@ void SceneController::setupWalls() {
 
   topWallBody->CreateFixture(&topWallFixture);
 
-  // bottom wall
-  b2BodyDef bottomWallBodyDef;
-  bottomWallBodyDef.type = b2_staticBody;
-  bottomWallBodyDef.position.Set(8.0f, 15.0f);
-  b2Body* bottomWallBody = world->CreateBody(&bottomWallBodyDef);
-
-  b2PolygonShape bottomWallShape;
-  bottomWallShape.SetAsBox(8.0f, 1.0f);
-
-  b2FixtureDef bottomWallFixture;
-  bottomWallFixture.shape = &bottomWallShape;
-  bottomWallFixture.density = 0;
-  bottomWallFixture.friction = 1;
-
-  bottomWallBody->CreateFixture(&bottomWallFixture);
+  //  // bottom wall
+  //  b2BodyDef bottomWallBodyDef;
+  //  bottomWallBodyDef.type = b2_staticBody;
+  //  bottomWallBodyDef.position.Set(8.0f, 15.0f);
+  //  b2Body* bottomWallBody = world->CreateBody(&bottomWallBodyDef);
+  //
+  //  b2PolygonShape bottomWallShape;
+  //  bottomWallShape.SetAsBox(8.0f, 1.0f);
+  //
+  //  b2FixtureDef bottomWallFixture;
+  //  bottomWallFixture.shape = &bottomWallShape;
+  //  bottomWallFixture.density = 0;
+  //  bottomWallFixture.friction = 1;
+  //
+  //  bottomWallBody->CreateFixture(&bottomWallFixture);
 }
 
 void SceneController::setupBall() {
@@ -124,7 +155,6 @@ void SceneController::setupBall() {
 
   // define shape
   b2CircleShape ballShape;
-  // position
   ballShape.m_p.Set(0, 0);
   ballShape.m_radius = .5f;
   ball.setRadius(.5f);
@@ -143,6 +173,7 @@ void SceneController::setupBall() {
 void SceneController::setupBlocks() {
   for (int i = 0; i < 3; i++) {
     for (int j = 0; j < 8; j++) {
+      // create block
       Block block;
       b2BodyDef blockBodyDef;
       blockBodyDef.type = b2_staticBody;
@@ -192,27 +223,4 @@ void SceneController::setupPaddle() {
 
   paddle.body->CreateFixture(&paddleFixture);
   paddle.setup();
-}
-
-void SceneController::movePaddleLeft() {
-  paddle.body->SetLinearVelocity(b2Vec2(-10, 0));
-}
-
-void SceneController::movePaddleRight() {
-  paddle.body->SetLinearVelocity(b2Vec2(10, 0));
-}
-
-void SceneController::stopPaddle() {
-  paddle.body->SetLinearVelocity(b2Vec2(0, 0));
-}
-
-void SceneController::BeginContact(b2Contact* contact) {
-  b2Fixture* a = contact->GetFixtureA();
-  b2Vec2 loc = a->GetBody()->GetPosition();
-  for (int i = 0; i < blocks.size(); i++) {
-    if (blocks[i].body->GetPosition() == loc) {
-      deleteBlockBodies.push_back(blocks[i].body);
-      blocks.erase(blocks.begin() + i);
-    }
-  }
 }

@@ -22,17 +22,19 @@ using namespace std;
 
 namespace myapp {
 
-using cinder::app::KeyEvent;
-
+// Set up the world
 b2Vec2 gravity(0.0f, 0.0f);
 b2World world(gravity);
 
 MyApp::MyApp() {}
 
 void MyApp::setup() {
+  // Set up Box2d world
   sceneController.setup(world);
   world.SetContactListener(&sceneController);
   printedGameOver = false;
+
+  // Set up background music
   cinder::audio::SourceFileRef sourceFile1 =
       cinder::audio::load(cinder::app::loadAsset("ChillingMusic.wav"));
   backgroundSound = cinder::audio::Voice::create(sourceFile1);
@@ -40,19 +42,25 @@ void MyApp::setup() {
 }
 
 void MyApp::update() {
+  if (sceneController.getGameOver()) {
+    return;
+  }
+
   // step physics world
-  if (sceneController.getGameOver()) { return;}
   float32 timeStep = 1.0f / 60.0f;
   int32 velocityIterations = 6;
   int32 positionIterations = 2;
   world.Step(timeStep, velocityIterations, positionIterations);
+
   sceneController.update();
   backgroundSound->start();
 }
 
 void MyApp::drawGameOver() {
+  // If already drawn no need to redraw
   if (printedGameOver) return;
-  const cinder::vec2 center = vec2(150,375);
+
+  const cinder::vec2 center = vec2(150, 375);
   const cinder::ivec2 size = {500, 50};
   const Color color = Color::black();
   string win;
@@ -62,12 +70,12 @@ void MyApp::drawGameOver() {
     win = "You Lost!";
   }
   auto box = TextBox()
-      .alignment(TextBox::CENTER)
-      .font(cinder::Font("Arial", 50))
-      .size(size)
-      .color(color)
-      .backgroundColor(ColorA(0, 0, 0, 0))
-      .text(win);
+                 .alignment(TextBox::CENTER)
+                 .font(cinder::Font("Arial", 50))
+                 .size(size)
+                 .color(color)
+                 .backgroundColor(ColorA(0, 0, 0, 0))
+                 .text(win);
 
   const auto box_size = box.getSize();
   const cinder::vec2 locp = {center};
@@ -79,6 +87,8 @@ void MyApp::drawGameOver() {
 
 void MyApp::draw() {
   cinder::gl::enableAlphaBlending();
+
+  // print game over page if someone won or lost
   if (sceneController.getGameOver()) {
     if (!printedGameOver) {
       cinder::gl::clear(ColorA(0, 0, 1, 100));
@@ -86,10 +96,10 @@ void MyApp::draw() {
     }
     return;
   }
+
   gl::clear();
   sceneController.draw();
 }
-
 
 void MyApp::keyDown(KeyEvent event) {
   switch (event.getCode()) {

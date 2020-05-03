@@ -5,22 +5,54 @@
 #ifndef FINALPROJECT_SCENECONTROLLER_H
 #define FINALPROJECT_SCENECONTROLLER_H
 
-#include <blocksmasher/SceneObject.h>
-
-#include <cinder/gl/draw.h>
 #include <Box2D/Box2D.h>
+#include <blocksmasher/SceneObject.h>
+#include <cinder/gl/draw.h>
+
 #include <vector>
 
+/**
+ * The SceneController simulates the Box2d world  and is the main game engine
+ */
 class SceneController : public b2ContactListener {
  public:
   SceneController();
+
+  /**
+   * Set up all the nevessary objects in the world and set instance variables
+   *
+   * param  b2Wrold&    The b2World that is passed in
+   */
   void setup(b2World& w);
+
+  /**
+   * Delete any blocks if necessary
+   */
   void update();
+
+  /**
+   * Draw the ball, paddle, and blocks
+   */
   void draw();
 
+  /**
+   * Start the game by applying force on the ball
+   */
   void startGame();
+
+  /**
+   * Apply force on paddle to move it left
+   */
   void movePaddleLeft();
+
+  /**
+   * Apply force on paddle to move it right
+   */
   void movePaddleRight();
+
+  /**
+   * Apply force on paddle to stop it
+   */
   void stopPaddle();
 
   bool getGameOver() { return gameOver; }
@@ -35,11 +67,31 @@ class SceneController : public b2ContactListener {
   bool gameOver;
   bool win;
 
+  /**
+   * Set up the ball object in Box2d and assign it to instance variable
+   */
   void setupBall();
+
+  /**
+   * Set up the block objects in Box2d and assign it to the blocks vector
+   */
   void setupBlocks();
+
+  /**
+   * Set up the paddle object in Box2d and assign it to instance variable
+   */
   void setupPaddle();
+
+  /**
+   * Set up the walls in Box2d
+   */
   void setupWalls();
 
+  /**
+   * Removes the blocks when there is contact
+   *
+   * param  b2Contact*      the contact in the b2World
+   */
   void BeginContact(b2Contact* contact) override;
 };
 
