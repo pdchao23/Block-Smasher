@@ -22,18 +22,30 @@ void SceneController::setup(b2World& w) {
 }
 
 void SceneController::update() {
+  deleteBlocks();
+  isWin();
+  isLose();
+}
+
+void SceneController::deleteBlocks() {
   // Go through the blocks supposed to delete and delete them
   for (b2Body* b : deleteBlockBodies) {
     world->DestroyBody(b);
   }
   deleteBlockBodies.clear();
+}
 
+bool SceneController::isWin() {
   // If no more blocks the game is over and the player has won
   if (blocks.empty()) {
     win = true;
     gameOver = true;
+    return true;
   }
+  return false;
+}
 
+bool SceneController::isLose() {
   // If the ball is below the screen the game is over and the player has lost
   if (ball.body->GetPosition().y > 17) {
     win = false;

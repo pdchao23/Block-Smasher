@@ -55,18 +55,6 @@ class SceneController : public b2ContactListener {
    */
   void stopPaddle();
 
-  bool getGameOver() { return gameOver; }
-  bool getWin() { return win; }
-
- private:
-  b2World* world;
-  std::vector<Block> blocks;
-  std::vector<b2Body*> deleteBlockBodies;
-  Ball ball;
-  Paddle paddle;
-  bool gameOver;
-  bool win;
-
   /**
    * Set up the ball object in Box2d and assign it to instance variable
    */
@@ -82,10 +70,32 @@ class SceneController : public b2ContactListener {
    */
   void setupPaddle();
 
+  bool isWin();
+
+  bool isLose();
+
+  bool getGameOver() { return gameOver; }
+  bool getWin() { return win; }
+  b2World* getWorld() { return world; }
+  Ball getBall() { return ball; }
+  Paddle getPaddle() { return paddle; }
+  std::vector<Block> getBlocks() { return blocks; }
+
+ private:
+  b2World* world;
+  std::vector<Block> blocks;
+  std::vector<b2Body*> deleteBlockBodies;
+  Ball ball;
+  Paddle paddle;
+  bool gameOver;
+  bool win;
+
   /**
    * Set up the walls in Box2d
    */
   void setupWalls();
+
+  void deleteBlocks();
 
   /**
    * Removes the blocks when there is contact

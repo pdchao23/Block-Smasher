@@ -13,7 +13,6 @@ using namespace ci;
 
 void Ball::setup() {
   tag = "ball";
-  body->SetUserData(this);
 }
 
 void Ball::draw() {
@@ -25,7 +24,6 @@ void Ball::draw() {
 void Block::setup() {
   tag = "block";
   color = ci::ColorA(ci::Rand::randFloat(0, .8), 0, 1, 1);
-  body->SetUserData(this);
 }
 
 void Block::draw() {
@@ -40,7 +38,6 @@ void Block::draw() {
 
 void Paddle::setup() {
   tag = "paddle";
-  body->SetUserData(this);
 }
 
 void Paddle::draw() {
