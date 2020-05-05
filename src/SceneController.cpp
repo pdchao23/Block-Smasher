@@ -140,21 +140,21 @@ void SceneController::setupWalls() {
 
   topWallBody->CreateFixture(&topWallFixture);
 
-//    // bottom wall
-//    b2BodyDef bottomWallBodyDef;
-//    bottomWallBodyDef.type = b2_staticBody;
-//    bottomWallBodyDef.position.Set(8.0f, 15.0f);
-//    b2Body* bottomWallBody = world->CreateBody(&bottomWallBodyDef);
-//
-//    b2PolygonShape bottomWallShape;
-//    bottomWallShape.SetAsBox(8.0f, 1.0f);
-//
-//    b2FixtureDef bottomWallFixture;
-//    bottomWallFixture.shape = &bottomWallShape;
-//    bottomWallFixture.density = 0;
-//    bottomWallFixture.friction = 1;
-//
-//    bottomWallBody->CreateFixture(&bottomWallFixture);
+    // bottom wall
+    b2BodyDef bottomWallBodyDef;
+    bottomWallBodyDef.type = b2_staticBody;
+    bottomWallBodyDef.position.Set(8.0f, 15.0f);
+    b2Body* bottomWallBody = world->CreateBody(&bottomWallBodyDef);
+
+    b2PolygonShape bottomWallShape;
+    bottomWallShape.SetAsBox(8.0f, 1.0f);
+
+    b2FixtureDef bottomWallFixture;
+    bottomWallFixture.shape = &bottomWallShape;
+    bottomWallFixture.density = 0;
+    bottomWallFixture.friction = 1;
+
+    bottomWallBody->CreateFixture(&bottomWallFixture);
 }
 
 void SceneController::setupBall() {

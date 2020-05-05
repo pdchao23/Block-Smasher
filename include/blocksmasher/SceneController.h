@@ -70,8 +70,18 @@ class SceneController : public b2ContactListener {
    */
   void setupPaddle();
 
+  /**
+   * Returns if the player has won
+   *
+   * @return true if the player has won and false otherwise
+   */
   bool isWin();
 
+  /**
+   * Returns if the player has lost
+   *
+   * @return true if the player has lost and false otherwise
+   */
   bool isLose();
 
   bool getGameOver() { return gameOver; }
@@ -95,6 +105,10 @@ class SceneController : public b2ContactListener {
    */
   void setupWalls();
 
+  /**
+   * Delete the blocks in the Box2D world in the given vector and clear the
+   * vector after
+   */
   void deleteBlocks();
 
   /**
