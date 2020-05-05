@@ -48,3 +48,12 @@ Week 2:
       - Working with collisions
       - Able to trigger the collision and set listener but cannot detect what
        body is connected with the contact
+       
+  - **5/3/20**
+     - Able to remove the blocks when ball collides with it
+     - Added the game over message
+     
+   - **5/4/20**
+       - Added comments
+       - Added tests
+       - Updated Read.me

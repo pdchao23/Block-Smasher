@@ -55,7 +55,6 @@ class MyApp : public cinder::app::App {
  private:
   SceneController sceneController;
   cinder::audio::VoiceRef backgroundSound;
-  bool printedGameOver;
 };
 
 }  // namespace myapp

@@ -32,7 +32,6 @@ void MyApp::setup() {
   // Set up Box2d world
   sceneController.setup(world);
   world.SetContactListener(&sceneController);
-  printedGameOver = false;
 
   // Set up background music
   cinder::audio::SourceFileRef sourceFile1 =
@@ -57,24 +56,24 @@ void MyApp::update() {
 }
 
 void MyApp::drawGameOver() {
-  // If already drawn no need to redraw
-  if (printedGameOver) return;
-
   const cinder::vec2 center = vec2(150, 375);
   const cinder::ivec2 size = {500, 50};
   const Color color = Color::black();
   string win;
+  Color backGroundColor;
   if (sceneController.getWin()) {
     win = "You Won!";
+    backGroundColor = Color(0, 0, 1);
   } else {
     win = "You Lost!";
+    backGroundColor = Color(1, 0, 0);
   }
   auto box = TextBox()
                  .alignment(TextBox::CENTER)
                  .font(cinder::Font("Arial", 50))
                  .size(size)
                  .color(color)
-                 .backgroundColor(ColorA(0, 0, 0, 0))
+                 .backgroundColor(backGroundColor)
                  .text(win);
 
   const auto box_size = box.getSize();
@@ -82,7 +81,6 @@ void MyApp::drawGameOver() {
   const auto surface = box.render();
   const auto texture = cinder::gl::Texture::create(surface);
   cinder::gl::draw(texture, locp);
-  printedGameOver = true;
 }
 
 void MyApp::draw() {
@@ -90,10 +88,7 @@ void MyApp::draw() {
 
   // print game over page if someone won or lost
   if (sceneController.getGameOver()) {
-    if (!printedGameOver) {
-      cinder::gl::clear(ColorA(0, 0, 1, 100));
-      drawGameOver();
-    }
+    drawGameOver();
     return;
   }
 

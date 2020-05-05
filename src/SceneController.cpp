@@ -30,14 +30,14 @@ void SceneController::update() {
 
   // If no more blocks the game is over and the player has won
   if (blocks.empty()) {
-    gameOver = true;
     win = true;
+    gameOver = true;
   }
 
   // If the ball is below the screen the game is over and the player has lost
   if (ball.body->GetPosition().y > 17) {
-    gameOver = true;
     win = false;
+    gameOver = true;
   }
 }
 
@@ -50,7 +50,7 @@ void SceneController::draw() {
 }
 
 void SceneController::startGame() {
-  ball.body->ApplyForce(b2Vec2(0, 300), ball.body->GetPosition());
+  ball.body->ApplyForce(b2Vec2(0, 600), ball.body->GetPosition());
 }
 
 void SceneController::movePaddleLeft() {
@@ -128,21 +128,21 @@ void SceneController::setupWalls() {
 
   topWallBody->CreateFixture(&topWallFixture);
 
-  //  // bottom wall
-  //  b2BodyDef bottomWallBodyDef;
-  //  bottomWallBodyDef.type = b2_staticBody;
-  //  bottomWallBodyDef.position.Set(8.0f, 15.0f);
-  //  b2Body* bottomWallBody = world->CreateBody(&bottomWallBodyDef);
-  //
-  //  b2PolygonShape bottomWallShape;
-  //  bottomWallShape.SetAsBox(8.0f, 1.0f);
-  //
-  //  b2FixtureDef bottomWallFixture;
-  //  bottomWallFixture.shape = &bottomWallShape;
-  //  bottomWallFixture.density = 0;
-  //  bottomWallFixture.friction = 1;
-  //
-  //  bottomWallBody->CreateFixture(&bottomWallFixture);
+//    // bottom wall
+//    b2BodyDef bottomWallBodyDef;
+//    bottomWallBodyDef.type = b2_staticBody;
+//    bottomWallBodyDef.position.Set(8.0f, 15.0f);
+//    b2Body* bottomWallBody = world->CreateBody(&bottomWallBodyDef);
+//
+//    b2PolygonShape bottomWallShape;
+//    bottomWallShape.SetAsBox(8.0f, 1.0f);
+//
+//    b2FixtureDef bottomWallFixture;
+//    bottomWallFixture.shape = &bottomWallShape;
+//    bottomWallFixture.density = 0;
+//    bottomWallFixture.friction = 1;
+//
+//    bottomWallBody->CreateFixture(&bottomWallFixture);
 }
 
 void SceneController::setupBall() {

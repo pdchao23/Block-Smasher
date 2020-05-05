@@ -16,10 +16,24 @@ This application simulates a brick breaker game where you have to move the
   engine.
   
 Gameplay:
+https://youtu.be/wOQb76jEgPE
+
+Target:
+- Elimitate all of the blocks above to win. If you let the ball fall below
+ the screen you lose.
 
 Dependencies:
+- MacOS
+- Clion
+- Cinder
+- Box2D Cinder Block Library
 
 Controls:
-- Use the left and right arrow keys to move the paddle
+- Start -> space
+- Move Paddle Left -> left arrow or "a"
+- Move Paddle Right -> right arrow or "d"
+- Stop Paddle -> up/down arrow or "w"/"s"
+
+
 
   
